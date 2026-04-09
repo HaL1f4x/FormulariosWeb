@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pizza Tour — Registro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0b08;
+      --surface: #151210;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --cream: #f5f0e8;
+      --muted: #6b6560;
+      --border: #2a2520;
+      --error: #c0392b;
+    }
+
+    html, body {
+      min-height: 100%;
+      background-color: var(--bg);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.08) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      background-size: cover, 200px 200px;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Header ── */
+    .card-header {
+      padding: 40px 40px 32px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 8vw, 44px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--cream);
+    }
+
+    .title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── Divider ornament ── */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 40px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .ornament-line { flex: 1; height: 1px; background: var(--border); }
+    .ornament-dot  { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
+
+    /* ── Form body ── */
+    .card-body {
+      padding: 32px 40px 40px;
+    }
+
+    .field {
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .field:nth-child(1) { animation-delay: 0.1s; }
+    .field:nth-child(2) { animation-delay: 0.18s; }
+    .field:nth-child(3) { animation-delay: 0.26s; }
+    .field:nth-child(4) { animation-delay: 0.34s; }
+
+    label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      padding: 10px 0 12px;
+      outline: none;
+      transition: border-color 0.25s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+
+    input::placeholder { color: var(--muted); font-size: 14px; }
+
+    input:focus {
+      border-bottom-color: var(--gold);
+    }
+
+    input.error-field {
+      border-bottom-color: var(--error);
+    }
+
+    .field-error {
+      font-size: 11px;
+      color: var(--error);
+      margin-top: 5px;
+      display: none;
+    }
+
+    /* ── Consent ── */
+    .consent-block {
+      margin-top: 8px;
+      margin-bottom: 32px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      background: rgba(201,168,76,0.03);
+      animation: fadeUp 0.6s 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .consent-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      cursor: pointer;
+    }
+
+    .consent-check input[type="checkbox"] {
+      display: none;
+    }
+
+    .custom-checkbox {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border: 1px solid var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+
+    .consent-check input[type="checkbox"]:checked + .custom-checkbox {
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+
+    .checkmark {
+      display: none;
+      width: 10px;
+      height: 10px;
+    }
+
+    .consent-check input[type="checkbox"]:checked + .custom-checkbox .checkmark {
+      display: block;
+    }
+
+    .consent-text {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .consent-text strong {
+      color: var(--cream);
+      font-weight: 400;
+    }
+
+    .consent-error {
+      font-size: 11px;
+      color: var(--error);
+      margin-top: 8px;
+      display: none;
+    }
+
+    /* ── Button ── */
+    .btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      border-radius: 0;
+      animation: fadeUp 0.6s 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover  { background: var(--gold-light); }
+    .btn:active { transform: scale(0.99); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(0,0,0,0.2);
+      border-top-color: var(--bg);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Success state ── */
+    .success-state {
+      display: none;
+      padding: 48px 40px;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .success-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+
+    .success-sub {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Footer ── */
+    .card-footer {
+      padding: 16px 40px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    /* ── Global error ── */
+    .global-error {
+      display: none;
+      background: rgba(192,57,43,0.08);
+      border: 1px solid rgba(192,57,43,0.3);
+      color: #e57373;
+      font-size: 12px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 520px) {
+      .card-header, .card-body, .card-footer { padding-left: 24px; padding-right: 24px; }
+      .ornament { margin: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+
+    <!-- Header -->
+    <div class="card-header">
+      <p class="eyebrow">Bucaramanga · Edición 2025</p>
+      <h1 class="title">Pizza<br><em>Tour</em></h1>
+      <p class="subtitle">Regístrate para participar en esta experiencia única. Tus datos son tratados con confidencialidad.</p>
+    </div>
+
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-line"></div>
+    </div>
+
+    <!-- Form body -->
+    <div class="card-body">
+
+      <!-- SUCCESS -->
+      <div class="success-state" id="successState">
+        <div class="success-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h2 class="success-title">¡Listo!</h2>
+        <p class="success-sub">Tu registro fue recibido.<br>Nos vemos en el Pizza Tour.</p>
+      </div>
+
+      <!-- FORM -->
+      <form id="pizzaForm" novalidate>
+
+        <div class="global-error" id="globalError">
+          Hubo un error al enviar. Por favor intenta de nuevo.
+        </div>
+
+        <div class="field">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre y apellido" autocomplete="name" />
+          <div class="field-error" id="nombreError">Este campo es obligatorio.</div>
+        </div>
+
+        <div class="field">
+          <label for="telefono">Teléfono / WhatsApp</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="300 000 0000" autocomplete="tel" />
+          <div class="field-error" id="telefonoError">Ingresa un número válido.</div>
+        </div>
+
+        <div class="field">
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" name="correo" placeholder="tu@correo.com" autocomplete="email" />
+          <div class="field-error" id="correoError">Ingresa un correo válido.</div>
+        </div>
+
+        <!-- Consent -->
+        <div class="consent-block">
+          <label class="consent-check" for="consentimiento">
+            <input type="checkbox" id="consentimiento" name="consentimiento" />
+            <div class="custom-checkbox">
+              <svg class="checkmark" viewBox="0 0 10 10" fill="none" stroke="#0d0b08" stroke-width="1.8">
+                <polyline points="1.5 5 4 7.5 8.5 2"/>
+              </svg>
+            </div>
+            <span class="consent-text">
+              Autorizo el tratamiento de mis datos personales de acuerdo con la
+              <strong>Ley 1581 de 2012</strong> y la política de privacidad de Pizza Tour,
+              para fines de comunicación, logística y registro del evento.
+            </span>
+          </label>
+          <div class="consent-error" id="consentError">Debes aceptar para continuar.</div>
+        </div>
+
+        <button type="submit" class="btn" id="submitBtn">
+          <span id="btnText">Confirmar registro</span>
+          <div class="btn-spinner" id="btnSpinner"></div>
+        </button>
+
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="card-footer">
+      Tus datos no serán compartidos con terceros ni utilizados con fines comerciales ajenos al evento.
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ── CONFIGURACIÓN ── Reemplaza esta URL con la de tu Apps Script desplegado
+  const APPS_SCRIPT_URL = 'TU_URL_AQUI';
+
+  const form       = document.getElementById('pizzaForm');
+  const successEl  = document.getElementById('successState');
+  const submitBtn  = document.getElementById('submitBtn');
+  const btnText    = document.getElementById('btnText');
+  const btnSpinner = document.getElementById('btnSpinner');
+  const globalErr  = document.getElementById('globalError');
+
+  function setLoading(on) {
+    submitBtn.disabled = on;
+    btnText.style.display    = on ? 'none'  : 'block';
+    btnSpinner.style.display = on ? 'block' : 'none';
+  }
+
+  function showFieldError(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
+  function clearErrors() {
+    ['nombreError','telefonoError','correoError','consentError'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+    ['nombre','telefono','correo'].forEach(id => {
+      document.getElementById(id).classList.remove('error-field');
+    });
+    globalErr.style.display = 'none';
+  }
+
+  function validate(nombre, telefono, correo, consent) {
+    let valid = true;
+    if (!nombre.trim()) {
+      showFieldError('nombreError', 'Este campo es obligatorio.');
+      document.getElementById('nombre').classList.add('error-field');
+      valid = false;
+    }
+    if (!telefono.trim() || !/^[0-9\s\+\-]{7,15}$/.test(telefono.trim())) {
+      showFieldError('telefonoError', 'Ingresa un número válido.');
+      document.getElementById('telefono').classList.add('error-field');
+      valid = false;
+    }
+    if (!correo.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+      showFieldError('correoError', 'Ingresa un correo válido.');
+      document.getElementById('correo').classList.add('error-field');
+      valid = false;
+    }
+    if (!consent) {
+      document.getElementById('consentError').style.display = 'block';
+      valid = false;
+    }
+    return valid;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearErrors();
+
+    const nombre   = document.getElementById('nombre').value;
+    const telefono = document.getElementById('telefono').value;
+    const correo   = document.getElementById('correo').value;
+    const consent  = document.getElementById('consentimiento').checked;
+
+    if (!validate(nombre, telefono, correo, consent)) return;
+
+    setLoading(true);
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre,
+          telefono,
+          correo,
+          consentimiento: 'Sí — Ley 1581',
+          fecha: new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })
+        })
+      });
+
+      // no-cors no retorna status, asumimos éxito si no hubo excepción
+      form.style.display     = 'none';
+      successEl.style.display = 'block';
+
+    } catch (err) {
+      globalErr.style.display = 'block';
+      setLoading(false);
+    }
+  });
+</script>
+</body>
+</html>
