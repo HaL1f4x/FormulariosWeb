@@ -129,9 +129,10 @@
     .subtitle {
       margin-top: 12px;
       font-size: 13px;
-      color: var(--muted);
+      color: var(--cream);
       line-height: 1.6;
       font-weight: 300;
+      opacity: 0.75;
     }
 
     /* ── Divider ornament ── */
@@ -165,7 +166,7 @@
       font-size: 10px;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--green);
+      color: #ffffff;
       font-weight: 500;
       margin-bottom: 8px;
     }
@@ -188,7 +189,7 @@
       -webkit-appearance: none;
     }
 
-    input::placeholder { color: #6b6560; font-size: 14px; }
+    input::placeholder { color: rgba(245,240,232,0.45); font-size: 14px; }
 
     input:focus {
       border-bottom-color: var(--green);
@@ -465,7 +466,7 @@
 
 <script>
   // ── CONFIGURACIÓN ── Reemplaza esta URL con la de tu Apps Script desplegado
-  const APPS_SCRIPT_URL = 'TU_URL_AQUI';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuo4JrTMMMIRyT6TBRS9Yje0CZhjyxNe1YVourtX1sj6ria43xQHo5E3G01gYwiJTQ/exec';
 
   const form       = document.getElementById('pizzaForm');
   const successEl  = document.getElementById('successState');
